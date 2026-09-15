@@ -54,6 +54,14 @@ namespace Othello.View
         }
 
         /// <summary>
+        /// 対局を捨てて開始局面からやり直す。終局していても呼べる。
+        /// </summary>
+        public void Restart()
+        {
+            SetState(GameState.CreateInitial(), true);
+        }
+
+        /// <summary>
         /// クリックされたマスへ着手する。非合法手なら false を返し、局面は一切変化しない。
         /// </summary>
         public bool TryPlay(BoardPosition position)
