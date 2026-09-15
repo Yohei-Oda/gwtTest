@@ -19,7 +19,12 @@ namespace Othello.View.EditorTools
         private const string ScenePath = "Assets/Scenes/Game.unity";
         private const string CanvasName = "UI";
         private const string BoardName = "Board";
+        private const string HudName = "Hud";
         private const string EventSystemName = "EventSystem";
+
+        /// <summary>盤面 804px とパネル 460px が 1920px の基準幅に収まる配置。</summary>
+        private const float BoardOffsetX = -280f;
+        private const float HudOffsetX = 420f;
 
         [MenuItem("Othello/Rebuild Game Scene")]
         public static void Rebuild()
@@ -69,11 +74,36 @@ namespace Othello.View.EditorTools
             var boardObject = new GameObject(BoardName, typeof(RectTransform), typeof(BoardView));
             boardObject.transform.SetParent(canvasObject.transform, false);
 
+            // 盤面は 804px 角。右側に情報パネルを置くぶんだけ左へ寄せる。
             var rect = (RectTransform)boardObject.transform;
             rect.anchorMin = new Vector2(0.5f, 0.5f);
             rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = Vector2.zero;
+            rect.anchoredPosition = new Vector2(BoardOffsetX, 0f);
+
+            CreateHud(canvasObject.transform, boardObject.GetComponent<BoardView>());
+        }
+
+        /// <summary>
+        /// 手番・スコア・パス通知・勝敗とリスタートボタンのパネル。
+        /// 中身は <see cref="GameHudView"/> が再生時に組み立てるので、ここでは
+        /// 置き場所と盤面への接続だけを決める。
+        /// </summary>
+        private static void CreateHud(Transform parent, BoardView board)
+        {
+            var hudObject = new GameObject(HudName, typeof(RectTransform), typeof(GameHudView));
+            hudObject.transform.SetParent(parent, false);
+
+            var rect = (RectTransform)hudObject.transform;
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(HudOffsetX, 0f);
+
+            var hud = hudObject.GetComponent<GameHudView>();
+            var serialized = new SerializedObject(hud);
+            serialized.FindProperty("board").objectReferenceValue = board;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>
