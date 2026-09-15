@@ -1,0 +1,20 @@
+{
+    "name": "Othello.View.Editor",
+    "rootNamespace": "Othello.View.EditorTools",
+    "references": [
+        "Othello.Core",
+        "Othello.View",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
