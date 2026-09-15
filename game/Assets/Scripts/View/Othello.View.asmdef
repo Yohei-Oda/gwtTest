@@ -1,0 +1,17 @@
+{
+    "name": "Othello.View",
+    "rootNamespace": "Othello.View",
+    "references": [
+        "Othello.Core",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
